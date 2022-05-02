@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect 
-from .forms import TopicForm
+from .forms import EntryForm, TopicForm
 from .models import Topic
 
 #this will be our home page 
@@ -51,3 +51,19 @@ def new_topic(request):
     
     context = {'form':form}
     return render(request,'Mainapp/new_topic.html',context)
+
+def new_entry(request,topic_id):
+    topic = Topic.objects.get(id=topic_id)
+    if request.method != 'POST':
+        form = EntryForm()
+    else:
+        form = EntryForm(data=request.POST)
+
+        if form.is_valid():
+            new_entry = form.save(commit=False)
+            new_entry.topic = topic #we get the topic from the line 56 
+            new_entry.save()
+            return redirect('Mainapp:topic',topic_id=topic_id)
+    
+    context = {'form':form,'topic':topic}
+    return render(request,'Mainapp/new_entry.html',context)
