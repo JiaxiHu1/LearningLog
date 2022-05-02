@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect 
 from .forms import EntryForm, TopicForm
-from .models import Topic
+from .models import Topic, Entry
 
 #this will be our home page 
 # Create your views here.
@@ -67,3 +67,19 @@ def new_entry(request,topic_id):
     
     context = {'form':form,'topic':topic}
     return render(request,'Mainapp/new_entry.html',context)
+
+def edit_entry(request,entry_id):
+    entry = Entry.object.get(id=entry_id)
+    topic = entry.topic
+
+    if request.method != 'POST':
+        form = EntryForm(instance=entry)
+    else:
+        form = EntryForm(instance=entry,data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('Mainapp:topic', topic_id=topic.id)
+    
+    context = {'form':form,'topic':topic,'entry':entry}
+    return render(request,'Mainapp/edit_entry.html',context)
+
