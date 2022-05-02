@@ -1,0 +1,20 @@
+{% extends "Mainapp/base.html" %}
+
+{% block content %}
+
+<ul>
+    {% for t in topics %}
+    <li>
+    <a href="{% url 'Mainapp:topic' t.id %}">{{ t }}</a>
+    </li>
+
+    <!--get and post requests- another potential question on the interview-->
+
+    {% empty %}
+    <li>No topics have been aded yet.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'Mainapp:new_topic' %}">Add a new topic</a>
+
+{% endblock content %}

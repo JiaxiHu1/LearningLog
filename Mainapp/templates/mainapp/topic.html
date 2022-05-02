@@ -1,0 +1,20 @@
+{% extends "Mainapp/base.html" %}
+
+{% block content %}
+
+<p>Topic: {{ topic }}</p> <!-- when we put in topic we need to use the lower case because this is how we defined -->
+
+<ul>
+    <li>
+    {% for e in entries %}
+    <!--you can do any attribute you can get it. e.method -->
+    <p>{{ e.text }}</p>
+    <p>{{ e.date_added }}</p>
+    </li>
+    {% empty %}
+    <li> There are no entries for this topic yet. </li>
+
+    {% endfor %}
+</ul>
+
+{% endblock content %}
