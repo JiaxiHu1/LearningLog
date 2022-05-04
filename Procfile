@@ -1,0 +1,1 @@
+web: gunicorn leanring_log.wsgi --log-file -
