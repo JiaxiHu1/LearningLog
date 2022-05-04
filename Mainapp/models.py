@@ -1,12 +1,16 @@
 from django.db import models
+from django.contrib.auth.models import User 
 
 # Create your models here.
-class Topic(models.Model):
+class Topic(models.Model):#inheritance 
     text = models.CharField(max_length = 200)
-    date_added = models.DateTimeField(auto_now_add=True)
+    date_added = models.DateTimeField(auto_now_add=True) #this is the date that when we added the topic 
 
-    def __str__(self):
-        return self.text
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    def __str__(self): #string method here. It returns back whatever you want to return. Actual information 
+        return self.text #this will return name of the topic. Because the text is the information about the topic 
+        
 
 class Entry(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)

@@ -18,7 +18,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('Mainapp.urls')) #from the homepage, we will include all the things from the urls website
+    path('',include('Mainapp.urls')), #from the homepage, we will include all the things from the urls website
+    path('users/',include("users.urls")),
 ]
 
 

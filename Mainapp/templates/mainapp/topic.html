@@ -10,6 +10,7 @@
     <!--you can do any attribute you can get it. e.method -->
     <p>{{ e.text }}</p>
     <p>{{ e.date_added }}</p>
+    <p><a href="{% url 'Mainapp:topic' topic.id %}">{{ topic }}</a></p>
     </li>
     {% empty %}
     <li> There are no entries for this topic yet. </li>

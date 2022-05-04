@@ -1,6 +1,9 @@
 from django.shortcuts import render,redirect 
 from .forms import EntryForm, TopicForm
 from .models import Topic, Entry
+from django.contrib.auth.decorators import login_required
+
+
 
 #this will be our home page 
 # Create your views here.
@@ -9,6 +12,7 @@ def index(request):
     return render(request, 'Mainapp/index.html')
     #last line will be a render - using this template 
 
+@login_required
 def topics(request):
     #Topic is the object in the models.py file 
     topics = Topic.objects.order_by('-date_added') #decending order will be '-date_added'
@@ -22,7 +26,7 @@ def topics(request):
 #url 
 #view 
 #template 
-
+@login_required
 #this will be the chess or the rockclimbing page for individual topic 
 def topic(request, topic_id):
     topic = Topic.objects.get(id=topic_id)
@@ -52,6 +56,7 @@ def new_topic(request):
     context = {'form':form}
     return render(request,'Mainapp/new_topic.html',context)
 
+@login_required
 def new_entry(request,topic_id):
     topic = Topic.objects.get(id=topic_id)
     if request.method != 'POST':
@@ -68,6 +73,7 @@ def new_entry(request,topic_id):
     context = {'form':form,'topic':topic}
     return render(request,'Mainapp/new_entry.html',context)
 
+@login_required
 def edit_entry(request,entry_id):
     entry = Entry.object.get(id=entry_id)
     topic = entry.topic
